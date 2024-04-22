@@ -17,13 +17,21 @@ from visualization import plot_interactive_temperature_comparison, plot_temperat
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        # to create csv file and to use stylesheet
-        if not os.path.exists('../data/weather.csv'):
+
+        # Ensure the data directory exists
+        data_directory = '../data'
+        if not os.path.exists(data_directory):
+            os.makedirs(data_directory)
+
+        # Handle the CSV file
+        csv_path = os.path.join(data_directory, 'weather.csv')
+        if not os.path.exists(csv_path):
             self.weather_data = pd.DataFrame(columns=['Data', 'Temperatūra', 'Miestas'])
         else:
-            self.weather_data = pd.read_csv('../data/weather.csv')
+            self.weather_data = pd.read_csv(csv_path)
 
-        stylesheet_path = os.path.join('../stylesheet/style.qss')
+        # Load stylesheet
+        stylesheet_path = os.path.join('../stylesheet', 'style.qss')
         try:
             with open(stylesheet_path, 'r') as file:
                 self.setStyleSheet(file.read())
