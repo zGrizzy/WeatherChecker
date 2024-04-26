@@ -5,12 +5,13 @@ import plotly.express as px
 
 def plot_temperature_comparison(data):
     sns.set_theme(style="whitegrid")
-    sns.color_palette("hls", 8)
-    sns.lineplot(x='Date', y='Temperature', hue='City', data=data, marker='o', palette='viridis')
+    palette = sns.color_palette("viridis", len(data['City'].unique()))  # Create a color palette
+    sns.lineplot(x='Date', y='Temperature', hue='City', data=data, marker='o', palette=palette)
     plt.title('Temperature Comparison Among Cities')
     plt.xlabel('Date')
     plt.ylabel('Temperature (°C)')
-    plt.xticks(rotation=-55)
+    plt.xticks(rotation=-55)  # Rotate the x-axis labels for better readability
+    plt.tight_layout()  # Adjusts plot to make sure everything fits without overlap
     plt.legend(title='City')
     plt.show()
 
