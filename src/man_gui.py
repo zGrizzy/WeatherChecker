@@ -88,7 +88,7 @@ class MainWindow(QMainWindow):
             weather_data_formatted = {
                 'Date': [current_date],
                 'Temperature': [weather_data['Temperature']],
-                'City': [weather_data['City']]
+                'City': [f"{weather_data['Country']}, {weather_data['City']}"]
             }
             new_data = pd.DataFrame(weather_data_formatted)
             new_data.dropna(axis=1, how='all', inplace=True)
@@ -103,7 +103,7 @@ class MainWindow(QMainWindow):
 
     def update_weather_display(self, weather_info):
         display_text = f"""
-    Weather Information for {weather_info['City']}:
+    Weather Information for {weather_info['Country']}, {weather_info['City']}:
     ---------------------------------------------------
     Temperature: {weather_info['Temperature']} °C
     Pressure: {weather_info['Pressure']} hPa
