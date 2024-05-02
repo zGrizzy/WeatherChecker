@@ -8,7 +8,7 @@ from PySide6.QtCore import QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWidgets import QApplication, QHBoxLayout, QLineEdit, QMainWindow, QPushButton, QTextEdit, QVBoxLayout, \
-    QWidget
+    QWidget, QMessageBox
 
 from data_management import get_weather
 from visualization import plot_interactive_temperature_comparison, plot_temperature_comparison
@@ -120,9 +120,12 @@ class MainWindow(QMainWindow):
             self.web_view.setHtml(html_content)
 
     def update_seaborn_plot(self):
-        self.figure.clear()
-        plot_temperature_comparison(self.weather_data)
-        self.canvas.draw()
+        if self.weather_data.empty:
+            QMessageBox.information(self, 'No Data', 'No data available for plotting.')
+        else:
+            self.figure.clear()
+            plot_temperature_comparison(self.weather_data)
+            self.canvas.draw()
 
 
 # Application and main window execution
